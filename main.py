@@ -1,9 +1,9 @@
 import discord
 import os
 import asyncio
-from discord.ext import commands
 import config
 import config_token
+import cogs.commands
 
 TOKEN = config_token.TOKEN
 
@@ -20,14 +20,6 @@ async def on_ready():
             await voice_client.disconnect()
             print(f"Отключился от голосового канала в {guild.name}")
 
-def load_radio_list():
-    radio_list = {}
-    with open("radio_list.txt", "r", encoding="utf-8") as f:
-        for line in f:
-            key, value = line.strip().split("=")
-            radio_list[key] = value
-    return radio_list
-
 
 def load():
     for filename in os.listdir("./cogs"):
@@ -37,11 +29,10 @@ def load():
 
 
 async def main():
-    config.RADIO_LIST = load_radio_list()
+    config.RADIO_LIST = cogs.commands.load_radio_list()
     load()
 
 
 if __name__ == "__main__":
     asyncio.run(main())
-    print(config.RADIO_LIST)
     bot.run(TOKEN)
