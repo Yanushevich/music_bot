@@ -3,7 +3,7 @@ import os
 import asyncio
 import config
 import config_token
-import cogs.commands
+from cogs import commands
 
 TOKEN = config_token.TOKEN
 
@@ -29,7 +29,7 @@ def load():
 
 
 async def main():
-    config.RADIO_LIST = cogs.commands.load_radio_list()
+    config.RADIO_LIST = commands.load_radio_list()
     load()
 
 
